@@ -1,10 +1,42 @@
 <body>
 <link rel="stylesheet" href="css/style.css">
 <!-- build a table here using the javascript -->
+
+
 <div id = "header"></div>
 <div id="mytable"></div>
 <div id="mytext"></div>
 <script src="https://d3js.org/d3.v3.js"></script>
-<script src="js/graph.js"></script>
-</body>
+<script src="js/timeserieschart.js"></script>
+<script>
 
+
+  var chart = timeSeriesChart()
+    .x(function(d) { return formatDate.parse(d.Date); })
+    .y(function(d) { return +d.Weight; });
+
+  var formatDate = d3.time.format("%m/%d/%y");
+
+  // Get the data
+  d3.csv("data/weight1.csv",
+    function(err, data) {
+      if (err) throw err;
+      d3.select("#mytable")
+      .datum(data)
+      .call(chart);
+  });
+
+  var header = d3.select("#header")
+      .append("h1")
+      .text(" My \"healthy\" year at MIDS");
+
+      d3.select("#mytext")
+      .append("p").text("The graph above clearly shows my struggle to juggle work, family, UC Berkeley and personal health.")
+      .append("p").text("Specifically in the last 3 months (overlapping with the last term's final projects), my weight \
+                          steadily increased from 225 lbs. to 234 lbs.");
+
+
+
+</script>
+<div id = "updateButton"></div>
+</body>
