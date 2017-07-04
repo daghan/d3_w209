@@ -120,14 +120,15 @@ function timeSeriesChart(){
           .on("mousemove", mousemove);
 
       function mousemove() {
-        var x0 = xScale.invert(d3.mouse(this)[0]);
+        var x0 = xScale.invert(d3.mouse(this)[0]-margin.left);
             i = bisectDate(data, x0, 1);
             if (i < data.length) {
               // d0 = data[i - 1][0];
               xd = data[i][0];
               yd = data[i][1]
               //d = x0 - d0 > d1 - x0 ? d1 : d0;
-              focus.attr("transform", "translate(" + xScale(xd) + "," + (yScale(yd)+margin.top - 10) + ")");
+              //console.log(xScale(xd)+margin.left)
+              focus.attr("transform", "translate(" + (xScale(xd)+margin.left) + "," + (yScale(yd)+margin.top - 5) + ")");
               focus.select("text").text(yd);
             }
       }
